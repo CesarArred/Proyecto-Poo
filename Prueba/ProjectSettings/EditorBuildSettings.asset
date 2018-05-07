@@ -5,13 +5,25 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Menu/Menu.unity
+    path: Assets/BrickBreaker/Scenes/Level1.unity
+    guid: d444670bd4dffc5439dac2f2b16e7178
+  - enabled: 1
+    path: Assets/BrickBreaker/Scenes/Scores.unity
+    guid: e2e507d6bbf384e49b6ceb82859dbfef
+  - enabled: 1
+    path: Assets/BrickBreaker/Scenes/MenuBrickBreaker.unity
     guid: 175e8e3db7aa14f49ba2a14b13056f86
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: d9757d4e9b1c22445803c448e52c1b78
+    path: Assets/MainMenu/MainMenu.unity
+    guid: 960b4d5b48c687c4ba667fd9bae7c627
   - enabled: 1
-    path: Assets/Scenes/Scores.unity
-    guid: e2e507d6bbf384e49b6ceb82859dbfef
+    path: Assets/PongVS/Scenes/MenuPong.unity
+    guid: 15f0ef13bb823804088df4d036469045
+  - enabled: 1
+    path: Assets/BrickBreaker/Scenes/GameOverBB.unity
+    guid: ac91d6cf17e709342a56dcc194a85593
   m_configObjects: {}

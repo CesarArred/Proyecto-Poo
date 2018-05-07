@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 8b8d86159ffa4be4fb79c76ae15f02cb
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Saiyan Sans
+  fontNames:
+  - Saiyan Sans
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 469f86efb44460b4597827d08db0a2c3, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
