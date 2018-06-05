@@ -11,13 +11,15 @@ public class Player : GameEntity, IMove {
 
     private void Update()
     {
-        string ScoreP1 = GameObject.Find("txtScoreP1").GetComponent<Text>().text;
-        string ScoreP2 = GameObject.Find("txtScoreP2").GetComponent<Text>().text;
+        int ScoreP1 = int.Parse(GameObject.Find("txtScoreP1").GetComponent<Text>().text);
+        int ScoreP2 = int.Parse(GameObject.Find("txtScoreP2").GetComponent<Text>().text);
 
-        if (ScoreP1 == "5" || ScoreP2 == "5")
+        if (ScoreP1 == 5 || ScoreP2 == 5)
         {
             Speed = Speed * 2;
         }
+
+        
     }
 
     public Player(int points, KeyCode moveup, KeyCode movedown)

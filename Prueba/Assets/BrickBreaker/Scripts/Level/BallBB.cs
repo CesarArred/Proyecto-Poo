@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 
 public class BallBB : GameEntity {
 
-    bool game = false;
+    public bool GameFinish = false;
     int lifes = 3;
-    bool keyReady;
     float rebound = 2;
     bool Ingame = false;
-    int contBricks = 48;
-    Animator BrickAnim;
+    public Rigidbody2D rb;
+    public float ballForce;
+    public int Score = 0;
+    int ContBricks = 48;
+    bool UP = false;
 
     // Use this for initialization
     void Start() {
-        
-        BrickAnim = GetComponent<Animator>();
 
     }
 
@@ -26,55 +27,79 @@ public class BallBB : GameEntity {
 	void Update () {
         if (Ingame)
         {
-            if (contBricks == 0)
+            if (ContBricks == 0)
             {
-                SceneManager.LoadScene("MenuBrickBreaker");
+                GameObject.Find("txtStart").GetComponent<Text>().text = "Complete \r   Loading...";
+                SavePScore();
+                SceneManager.LoadScene("GameFinish");
             }
-        }
-        else
+
+            float velY = gameObject.GetComponent<Rigidbody2D>().velocity.y;
+
+            if (velY < 0)
+            {
+                UP = false;
+            } 
+            else if (velY > 0)
+            {
+                UP = true;
+            }
+            else
+            {
+                float velX = gameObject.GetComponent<Rigidbody2D>().velocity.x;
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(velX, 20f);
+            }
+            BallVelocityY();
+
+        } else
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 5f);
+                int rand = Random.Range(-1, 2);
+                rb.AddForce(new Vector2(ballForce * rand, ballForce));
                 Ingame = true;
                 GameObject.Find("txtStart").GetComponent<Text>().text = "";
-            } else
+                UP = true;
+            }
+            else
             {
                 float PosX = GameObject.Find("Bar").transform.position.x;
                 float PosY = GameObject.Find("Bar").transform.position.y + GameObject.Find("Bar").transform.localScale.y;
 
-                this.transform.position = new Vector3(PosX,PosY,-1);
+                this.transform.position = new Vector3(PosX, PosY, -1);
             }
         }
 	}
 
     private void OnCollisionEnter2D(Collision2D hit)
     {
-        float distance = this.transform.position.x - GameObject.Find("Bar").transform.position.x;
-        Rigidbody2D BBall = GetComponent<Rigidbody2D>();
-        float velX = gameObject.GetComponent<Rigidbody2D>().velocity.x;
-        Debug.Log(velX);
-        float velY = 5f;
-
-
-        switch (hit.gameObject.name)
+        switch (hit.gameObject.tag)
         {
-            case "Bar":
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(distance * 2f, velY);
+            case "Brick":
+                Score += 10;
+                ContBricks--;
                 break;
 
-            case "Roof":
-                this.GetComponent<Rigidbody2D>().velocity = new Vector2(velX, -velY);
+            case "LifeBrick":
+                lifes++;
+                GameObject.Find("txtLifes").GetComponent<Text>().text = "Lives: " + lifes.ToString();
+                Score += 100;
+                ContBricks--;
+                GameObject.Find("Particles").transform.position = new Vector3(500, 0, 0);
+                break;
+
+            case "BombBrick":
+                Score += 50;
+                ContBricks--;
+                //BombExplotion(hit.gameObject.name);
+                break;
+
+            case "Player":
+                float dist = transform.position.x - hit.gameObject.transform.position.x;
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(dist * 3f, 5f);
                 break;
         }
-
-        if (hit.gameObject.tag == "Brick")
-        {
-            Object.Destroy(hit.gameObject, 0.3f);
-            //BrickAnim.SetBool("BrickHit", true);
-            contBricks--;
-        }
-
+        GameObject.Find("txtScore").GetComponent<Text>().text = "Score: " + Score.ToString();
     }
 
     private void OnBecameInvisible()
@@ -85,7 +110,7 @@ public class BallBB : GameEntity {
         } else
         {
             lifes--;
-            GameObject.Find("txtLifes").GetComponent<Text>().text = "Lifes: " + lifes.ToString();
+            GameObject.Find("txtLifes").GetComponent<Text>().text = "Lives: " + lifes.ToString();
             GameObject.Find("Bar").transform.position = new Vector3(0.035f, -4.5f, -1);
             float posx = ((GameObject.Find("Bar").transform.position.x + GameObject.Find("Bar").transform.localScale.y) / 2) - this.transform.localScale.x;
             float posy = GameObject.Find("Bar").transform.position.y + GameObject.Find("Bar").transform.localScale.y;
@@ -93,7 +118,133 @@ public class BallBB : GameEntity {
             this.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
             Ingame = false;
             GameObject.Find("txtStart").GetComponent<Text>().text = "Press space to start";
+            
 
         }
+    }
+       
+    void BallVelocityY()
+    {
+        float velY = gameObject.GetComponent<Rigidbody2D>().velocity.y;
+        float velX = gameObject.GetComponent<Rigidbody2D>().velocity.y;
+        if (UP)
+        {
+
+        }
+        else
+        {
+            if (velY > -0.5f)
+            {
+                velY -= 0.5f;
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(velX, velY);
+            }
+        }
+    }
+
+    void BombExplotion(string name)
+    {
+        string pos = name.Substring(1);
+        int PosN = int.Parse(pos);
+       if (PosN <= 11)
+        {
+            string name1 = "C" + (PosN - 1).ToString();
+            string name2 = "C" + (PosN + 1).ToString();
+            string name3 = "C" + (PosN + 12).ToString();
+            string name4 = "C" + ((PosN - 1) + 12).ToString();
+            string name5 = "C" + ((PosN + 1) + 12).ToString();
+
+            Tags(name1);
+            Tags(name2);
+            Tags(name3);
+            Tags(name4);
+            Tags(name5);
+
+            Object.Destroy(GameObject.Find(name1));
+            Object.Destroy(GameObject.Find(name2));
+            Object.Destroy(GameObject.Find(name3));
+            Object.Destroy(GameObject.Find(name4));
+            Object.Destroy(GameObject.Find(name5));
+        }
+        else if (PosN > 11 && PosN <= 35)
+        {
+            string name1 = "C" + (PosN - 1).ToString();
+            string name2 = "C" + (PosN + 1).ToString();
+            string name3 = "C" + (PosN + 12).ToString();
+            string name4 = "C" + (PosN - 12).ToString();
+            string name5 = "C" + ((PosN - 1) + 12).ToString();
+            string name6 = "C" + ((PosN - 1) - 12).ToString();
+            string name7 = "C" + ((PosN + 1) + 12).ToString();
+            string name8 = "C" + ((PosN - 1) - 12).ToString();
+
+            Tags(name1);
+            Tags(name2);
+            Tags(name3);
+            Tags(name4);
+            Tags(name5);
+            Tags(name6);
+            Tags(name7);
+            Tags(name8);
+
+            Object.Destroy(GameObject.Find(name1));
+            Object.Destroy(GameObject.Find(name2));
+            Object.Destroy(GameObject.Find(name3));
+            Object.Destroy(GameObject.Find(name4));
+            Object.Destroy(GameObject.Find(name5));
+            Object.Destroy(GameObject.Find(name6));
+            Object.Destroy(GameObject.Find(name7));
+            Object.Destroy(GameObject.Find(name8));
+        }
+        else
+        {
+            string name1 = "C" + (PosN - 1).ToString();
+            string name2 = "C" + (PosN + 1).ToString();
+            string name4 = "C" + (PosN - 12).ToString();
+            string name5 = "C" + ((PosN -1) - 12).ToString();
+            string name6 = "C" + ((PosN +1) - 12).ToString();
+
+            Tags(name1);
+            Tags(name2);
+            Tags(name4);
+            Tags(name5);
+            Tags(name6);
+
+            Object.Destroy(GameObject.Find(name1));
+            Object.Destroy(GameObject.Find(name2));
+            Object.Destroy(GameObject.Find(name4));
+            Object.Destroy(GameObject.Find(name5));
+            Object.Destroy(GameObject.Find(name6));
+        }
+    }
+
+    void Tags(string name)
+    {
+        var obh = GameObject.Find(name);
+        string ObjectTag = GameObject.Find(name).gameObject.tag;
+        Debug.Log(ObjectTag);
+        switch (ObjectTag)
+        {
+            case "Brick":
+                Score += 10;
+                ContBricks--;
+                break;
+            case "LifeBrick":
+                lifes++;
+                GameObject.Find("txtLifes").GetComponent<Text>().text = "Lives: " + lifes.ToString();
+                Score += 100;
+                ContBricks--;
+                break;
+            case "BombBrick":
+                Score += 50;
+                ContBricks--;
+                BombExplotion(name);
+                break;
+        }
+    }
+
+    void SavePScore()
+    {
+        StreamWriter Write = File.AppendText("Score.txt");
+        Write.WriteLine(Score.ToString());
+        Write.Close();
     }
 }

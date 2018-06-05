@@ -147,8 +147,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000015259, y: -125}
-  m_SizeDelta: {x: 164, y: 42.1}
+  m_AnchoredPosition: {x: -11, y: -127}
+  m_SizeDelta: {x: 172.9, y: 45.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &17302183
 MonoBehaviour:
@@ -5455,8 +5455,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: -61}
-  m_SizeDelta: {x: 164, y: 42.1}
+  m_AnchoredPosition: {x: -11, y: -55}
+  m_SizeDelta: {x: 172.9, y: 45.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &868863634
 MonoBehaviour:
@@ -5588,7 +5588,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -5606,9 +5606,9 @@ Canvas:
   m_GameObject: {fileID: 1609428625}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 1642828862}
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -5827,8 +5827,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000002861}
-  m_SizeDelta: {x: 164, y: 42.1}
+  m_AnchoredPosition: {x: -11, y: 14}
+  m_SizeDelta: {x: 172.9, y: 45.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1771696116
 MonoBehaviour:
@@ -5947,8 +5947,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 76}
-  m_SizeDelta: {x: 344.8, y: 91.45}
+  m_AnchoredPosition: {x: -11, y: 91.35}
+  m_SizeDelta: {x: 489.5, y: 109.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1811145509
 MonoBehaviour:
@@ -5971,7 +5971,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 469f86efb44460b4597827d08db0a2c3, type: 3}
-    m_FontSize: 75
+    m_FontSize: 90
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0

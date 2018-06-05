@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class VSMode : MonoBehaviour {
 
@@ -25,7 +27,12 @@ public class VSMode : MonoBehaviour {
         {
             BallMove();
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MenuPong");
+        }
+
     }
 
     void FixedUpdate () {

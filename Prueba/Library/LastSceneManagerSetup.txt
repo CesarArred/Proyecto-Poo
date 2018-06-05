@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/PongVS/Scenes/LevelVS.unity
+- path: Assets/PongVS/Scenes/MenuPong.unity
   isLoaded: 1
   isActive: 1
